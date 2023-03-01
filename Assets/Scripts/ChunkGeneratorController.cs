@@ -7,7 +7,7 @@ public class ChunkGeneratorController : MonoBehaviour
     [SerializeField] private ChunkGenerator _chunkGenerator;
     [SerializeField] private Transform _player;
     [SerializeField] private int _startQuantityChunks;
-    
+
     private readonly Dictionary<Vector2, Tilemap> _chunks = new ();
     private readonly List<Tilemap> _activeChunks = new ();
     private Vector2 _currentPosition;
