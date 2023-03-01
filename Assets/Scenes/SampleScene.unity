@@ -418,6 +418,54 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 2128369924}
+--- !u!1 &772000305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 772000306}
+  - component: {fileID: 772000307}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &772000306
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772000305}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1758202891}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &772000307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772000305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9acb4a3fca04cc6a66930ac767367fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCamera: {fileID: 557876668}
+  _player: {fileID: 535597486}
+  _specialViewModeController: {fileID: 1639927775}
+  _chunkGeneratorController: {fileID: 1527800156}
 --- !u!1 &1127894167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7479420598193841262, guid: 5b7700cdb071f924ba4a3fa3dc1d8df8, type: 3}
@@ -449,12 +497,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7ed39fd75146189dcf6120dff2f367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _specialViewMode:
+  _specialViewModeOn:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1639927775}
         m_TargetAssemblyTypeName: SpecialViewModeController, Assembly-CSharp
-        m_MethodName: DisplayPlanets
+        m_MethodName: OnSpecialViewMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _specialViewModeOff:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1639927775}
+        m_TargetAssemblyTypeName: SpecialViewModeController, Assembly-CSharp
+        m_MethodName: OffSpecialViwMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -527,7 +590,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chunkGenerator: {fileID: 1598034019}
-  _player: {fileID: 535597486}
   _startQuantityChunks: 100
 --- !u!4 &1527800157
 Transform:
@@ -573,11 +635,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfc2c9f8ead4cc7bd8a96a8efebbaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chunkGenerated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1599237405}
+        m_TargetAssemblyTypeName: PlanetSorter, Assembly-CSharp
+        m_MethodName: ResortPlanets
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _spacePrefab: {fileID: 988679494978467221, guid: 6101cb880b924eb41be5c524061babbd, type: 3}
   _tilePlanet: {fileID: 11400000, guid: 836fcd56575f9ed49a98eb69d52f2181, type: 2}
   _grid: {fileID: 1773598665}
   _planetPrefab: {fileID: 7000722522710136384, guid: fdc54e2765a50144da8d0f482673e534, type: 3}
-  _planetSorter: {fileID: 1599237405}
   "_percentagePlanetsPer\u0421hunk": 30
   _chunkSize: 100
 --- !u!4 &1598034020
@@ -668,9 +744,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dd06dd0b9c44ad924786b63292a0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _countNearestPlanets: 20
   _planetSorter: {fileID: 1599237405}
-  _playerCamera: {fileID: 557876668}
-  _player: {fileID: 535597486}
 --- !u!4 &1639927776
 Transform:
   m_ObjectHideFlags: 0
@@ -714,6 +789,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 772000306}
   - {fileID: 1639927776}
   - {fileID: 1599237406}
   - {fileID: 1598034020}

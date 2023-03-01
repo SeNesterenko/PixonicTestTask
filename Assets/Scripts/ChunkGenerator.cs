@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 public class ChunkGenerator : MonoBehaviour
 {
+    [SerializeField] private UnityEvent<List<Planet>> _chunkGenerated;
+    
     [SerializeField] private Tilemap _spacePrefab;
     [SerializeField] private TileBase _tilePlanet;
     [SerializeField] private Grid _grid;
     [SerializeField] private Planet _planetPrefab;
-    [SerializeField] private PlanetSorter _planetSorter;
 
     [SerializeField] private int _percentagePlanetsPerСhunk;
     [SerializeField] private int _chunkSize = 100;
@@ -43,6 +45,6 @@ public class ChunkGenerator : MonoBehaviour
             spaceTilemap.SetTile(tilePosition, _tilePlanet);
         }
         
-        _planetSorter.ResortPlanets(planets);
+        _chunkGenerated.Invoke(planets);
     }
 }

@@ -1,4 +1,5 @@
 using Cinemachine;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class SpecialViewModeController : MonoBehaviour
@@ -14,8 +15,17 @@ public class SpecialViewModeController : MonoBehaviour
         _playerCamera = playerCamera;
         _player = player;
     }
+
+    //Call it when special view mode off
+    [UsedImplicitly]
+    public void OffSpecialViwMode()
+    {
+        
+    }
     
-    public void DisplayPlanets()
+    //Call it when special view mode on
+    [UsedImplicitly]
+    public void OnSpecialViewMode()
     {
         var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.position, _countNearestPlanets, 4639);
 

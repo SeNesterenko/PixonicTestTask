@@ -4,7 +4,8 @@ using UnityEngine.Events;
 
 public class PlayerScrollController : MonoBehaviour
 {
-    [SerializeField] private UnityEvent _specialViewMode;
+    [SerializeField] private UnityEvent _specialViewModeOn;
+    [SerializeField] private UnityEvent _specialViewModeOff;
     
     [SerializeField] private float _scrollSpeed = 20f;
     [SerializeField] private CinemachineVirtualCamera _playerCamera;
@@ -30,7 +31,11 @@ public class PlayerScrollController : MonoBehaviour
 
         if (_playerCamera.m_Lens.OrthographicSize * 2 >= _specialViewModeDistance)
         {
-            _specialViewMode.Invoke();
+            _specialViewModeOn.Invoke();
+        }
+        else
+        {
+            _specialViewModeOff.Invoke();
         }
         
         _playerCamera.m_Lens.OrthographicSize += -mouseScroll * _scrollSpeed;

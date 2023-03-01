@@ -5,15 +5,21 @@ using UnityEngine.Tilemaps;
 public class ChunkGeneratorController : MonoBehaviour
 {
     [SerializeField] private ChunkGenerator _chunkGenerator;
-    [SerializeField] private Transform _player;
     [SerializeField] private int _startQuantityChunks;
 
+    private Transform _player;
+    
     private readonly Dictionary<Vector2, Tilemap> _chunks = new ();
     private readonly List<Tilemap> _activeChunks = new ();
     private Vector2 _currentPosition;
 
     private int _currentXIndex;
     private int _currentYIndex;
+
+    public void Initialize(Transform player)
+    {
+        _player = player;
+    }
     private void Start()
     {
         SetCurrentPositionIndexes();

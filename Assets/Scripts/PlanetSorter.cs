@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlanetSorter : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlanetSorter : MonoBehaviour
     private List<Planet> _sortedPlanetsByX = new ();
     private List<Planet> _sortedPlanetsByY = new ();
 
+    //Call it when new chunk generated
+    [UsedImplicitly]
     public void ResortPlanets(List<Planet> newPlanets)
     {
         foreach (var planet in newPlanets)
