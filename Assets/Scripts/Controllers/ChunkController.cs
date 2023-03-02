@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -52,6 +53,8 @@ namespace Controllers
             _currentPosition = currentPosition;
         }
 
+        //Call it when ViewMode changed
+        [UsedImplicitly]
         public void InitializeSpawnChunks()
         {
             var currentPosition = SetCurrentPositionIndexes();

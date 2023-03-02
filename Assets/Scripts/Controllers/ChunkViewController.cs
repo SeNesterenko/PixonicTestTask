@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -28,6 +29,8 @@ namespace Controllers
             }
         }
 
+        //Call it when ViewMode changed
+        [UsedImplicitly]
         public void ShowPlanets(List<Planet> planets)
         {
             DisableChunks();

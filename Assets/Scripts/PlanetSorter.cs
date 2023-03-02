@@ -53,14 +53,7 @@ public class PlanetSorter : MonoBehaviour
 
             if (index == -1)
             {
-                for (var i = 0; i < planetsInSight.Count; i++)
-                {
-                    if (playerRank <= planetsInSight[i].Rank)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
+                index = Utils.BinarySearch(planetsInSight, playerRank);
             }
             
             var leftBorder = index - 1;
