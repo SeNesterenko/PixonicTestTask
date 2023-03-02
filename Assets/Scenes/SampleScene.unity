@@ -314,6 +314,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7479420598193841251, guid: 5b7700cdb071f924ba4a3fa3dc1d8df8, type: 3}
   m_PrefabInstance: {fileID: 535597485}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &540453825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540453828}
+  - component: {fileID: 540453827}
+  - component: {fileID: 540453826}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &540453826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540453825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &540453827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540453825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &540453828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540453825}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &545976941
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,9 +530,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 557876668}
-  _player: {fileID: 535597486}
+  _player: {fileID: 1127894174}
   _specialViewModeController: {fileID: 1639927775}
-  _chunkGeneratorController: {fileID: 1527800156}
+  _chunkController: {fileID: 1541542375}
 --- !u!1 &1127894167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7479420598193841262, guid: 5b7700cdb071f924ba4a3fa3dc1d8df8, type: 3}
@@ -531,7 +598,7 @@ MonoBehaviour:
   _playerCamera: {fileID: 557876668}
   _minFieldView: 2.5
   _maxFieldView: 500
-  _specialViewModeDistance: 10
+  _specialViewModeDistance: 20
 --- !u!114 &1127894173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,6 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minRank: 0
   _maxRank: 10000
+  _transform: {fileID: 535597486}
 --- !u!1 &1527800155
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,7 +639,7 @@ GameObject:
   - component: {fileID: 1527800157}
   - component: {fileID: 1527800156}
   m_Layer: 0
-  m_Name: ChunkGeneratorController
+  m_Name: ChunkSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -589,8 +657,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ace0f1efe0b12449a21002b377116ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chunkGenerator: {fileID: 1598034019}
-  _startQuantityChunks: 100
+  _chunkGenerated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1599237405}
+        m_TargetAssemblyTypeName: PlanetSorter, Assembly-CSharp
+        m_MethodName: ResortPlanets
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _spacePrefab: {fileID: 988679494978467221, guid: 6101cb880b924eb41be5c524061babbd, type: 3}
+  _tilePlanet: {fileID: 11400000, guid: 836fcd56575f9ed49a98eb69d52f2181, type: 2}
+  _grid: {fileID: 1773598665}
+  _planetPrefab: {fileID: 7000722522710136384, guid: fdc54e2765a50144da8d0f482673e534, type: 3}
+  "_percentagePlanetsPer\u0421hunk": 30
+  _chunkSize: 100
 --- !u!4 &1527800157
 Transform:
   m_ObjectHideFlags: 0
@@ -647,75 +734,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1541542373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c496529704847b2aaf647c5eb719c81, type: 3}
+  m_Script: {fileID: 11500000, guid: 37fd11013b6a4b908bb5b86394a91432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chunkGeneratorController: {fileID: 1527800156}
---- !u!1 &1598034018
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1598034020}
-  - component: {fileID: 1598034019}
-  m_Layer: 0
-  m_Name: ChunkGenerator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1598034019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598034018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfc2c9f8ead4cc7bd8a96a8efebbaec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _chunkGenerated:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1599237405}
-        m_TargetAssemblyTypeName: PlanetSorter, Assembly-CSharp
-        m_MethodName: ResortPlanets
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _spacePrefab: {fileID: 988679494978467221, guid: 6101cb880b924eb41be5c524061babbd, type: 3}
-  _tilePlanet: {fileID: 11400000, guid: 836fcd56575f9ed49a98eb69d52f2181, type: 2}
-  _grid: {fileID: 1773598665}
-  _planetPrefab: {fileID: 7000722522710136384, guid: fdc54e2765a50144da8d0f482673e534, type: 3}
-  "_percentagePlanetsPer\u0421hunk": 30
-  _chunkSize: 100
---- !u!4 &1598034020
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1598034018}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.490234, y: 1691.6182, z: -5.552083}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1758202891}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  _chunkViewController: {fileID: 2090840690}
+  _chunkSpawner: {fileID: 1527800156}
+  _startQuantityChunks: 100
 --- !u!1 &1599237404
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +813,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dd06dd0b9c44ad924786b63292a0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _viewChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2090840690}
+        m_TargetAssemblyTypeName: ChunkViewController, Assembly-CSharp
+        m_MethodName: ShowPlanets
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _specialViewModePlanet: {fileID: 21300000, guid: ef1bf2ecc16140f4195ed991ac4136c1, type: 3}
   _countNearestPlanets: 20
   _planetSorter: {fileID: 1599237405}
 --- !u!4 &1639927776
@@ -837,9 +877,9 @@ Transform:
   - {fileID: 772000306}
   - {fileID: 1639927776}
   - {fileID: 1599237406}
-  - {fileID: 1598034020}
   - {fileID: 1527800157}
   - {fileID: 1541542374}
+  - {fileID: 2090840689}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -887,6 +927,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2090840688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2090840689}
+  - component: {fileID: 2090840690}
+  m_Layer: 0
+  m_Name: ChunkViewController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2090840689
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090840688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1758202891}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2090840690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090840688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c496529704847b2aaf647c5eb719c81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2128369923
 GameObject:
   m_ObjectHideFlags: 3

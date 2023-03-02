@@ -4,11 +4,14 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private int _minRank;
     [SerializeField] private int _maxRank = 10000;
+    [SerializeField] private Transform _transform;
     
-    private int _rank;
+    public int Rank { get; private set; }
 
+    public Transform Transform => _transform;
+    
     private void Start()
     {
-        _rank = Random.Range(_minRank, _maxRank);
+        Rank = Random.Range(_minRank, _maxRank);
     }
 }

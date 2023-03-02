@@ -32,13 +32,14 @@ public class ChunkSpawner : MonoBehaviour
             
             var planet = Instantiate(_planetPrefab, spaceTilemap.transform);
             planet.transform.position = tilePosition;
-            planet.Initialize(tilePosition);
+            planet.Initialize(tilePosition, true);
             planets.Add(planet);
             
             spaceTilemap.SetTile(tilePosition, _tilePlanet);
         }
         
         _chunkGenerated.Invoke(planets);
+        spaceTilemap.gameObject.SetActive(false);
         return spaceTilemap;
     }
 }

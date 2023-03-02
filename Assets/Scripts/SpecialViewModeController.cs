@@ -1,16 +1,23 @@
+using System.Collections.Generic;
 using Cinemachine;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SpecialViewModeController : MonoBehaviour
 {
+    [SerializeField] private UnityEvent<List<Planet>> _viewChanged;
+    [SerializeField] private Sprite _specialViewModePlanet;
+    
     [SerializeField] private int _countNearestPlanets = 20;
     [SerializeField] private PlanetSorter _planetSorter;
-    
-    private CinemachineVirtualCamera _playerCamera;
-    private Transform _player;
 
-    public void Initialize(CinemachineVirtualCamera playerCamera, Transform player)
+    private Player _player;
+    private CinemachineVirtualCamera _playerCamera;
+    private bool _isSpecialViewMode;
+    private Vector3 _previousPlayerPosition;
+
+    public void Initialize(CinemachineVirtualCamera playerCamera, Player player)
     {
         _playerCamera = playerCamera;
         _player = player;
@@ -20,19 +27,28 @@ public class SpecialViewModeController : MonoBehaviour
     [UsedImplicitly]
     public void OffSpecialViwMode()
     {
-        
+        _isSpecialViewMode = false;
     }
     
     //Call it when special view mode on
     [UsedImplicitly]
     public void OnSpecialViewMode()
     {
-        var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.position, _countNearestPlanets, 4639);
+        var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
+        _viewChanged.Invoke(planets);
+        _isSpecialViewMode = true;
+    }
 
-        Debug.Log("-----------------------------------");
-        foreach (var planet in planets)
+    private void Update()
+    {
+        if (_isSpecialViewMode)
         {
-            Debug.Log(planet.Rank);
+            if (_player.Transform.position != _previousPlayerPosition)
+            {
+                var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
+                _viewChanged.Invoke(planets);
+                _previousPlayerPosition = _player.Transform.position;
+            }
         }
     }
 }
