@@ -1,4 +1,5 @@
 using Cinemachine;
+using Controllers;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
