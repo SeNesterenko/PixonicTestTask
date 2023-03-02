@@ -7,11 +7,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform _player;
     
     [SerializeField] private SpecialViewModeController _specialViewModeController;
-    [SerializeField] private ChunkGeneratorController _chunkGeneratorController;
+    [SerializeField] private ChunkController _chunkController;
 
     private void Start()
     {
         _specialViewModeController.Initialize(_playerCamera, _player);
-        _chunkGeneratorController.Initialize(_player);
+        _chunkController.Initialize(_player);
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
-public class ChunkGenerator : MonoBehaviour
+public class ChunkSpawner : MonoBehaviour
 {
     [SerializeField] private UnityEvent<List<Planet>> _chunkGenerated;
     
@@ -14,27 +14,20 @@ public class ChunkGenerator : MonoBehaviour
 
     [SerializeField] private int _percentagePlanetsPerСhunk;
     [SerializeField] private int _chunkSize = 100;
-
     public int ChunkSize => _chunkSize;
-    
-    public Tilemap GenerateChunk(int xPosition, int yPosition)
+
+    public Tilemap SpawnChunk(Vector2 currentPosition)
     {
         var spaceTilemap = Instantiate(_spacePrefab, _grid.transform);
-        GeneratePlanets(xPosition, yPosition, spaceTilemap);
-
-        return spaceTilemap;
-    }
-
-    private void GeneratePlanets(int xPosition, int yPosition, Tilemap spaceTilemap)
-    {
-        var xFinalPosition = xPosition * _chunkSize;
-        var yFinalPosition = yPosition * _chunkSize;
+        
+        var xFinalPosition = (currentPosition.x + 1) * _chunkSize;
+        var yFinalPosition = (currentPosition.y + 1) * _chunkSize;
         var planets = new List<Planet>();
 
         for (var i = 0; i < _percentagePlanetsPerСhunk; i++)
         {
-            var x = Random.Range(xFinalPosition - _chunkSize, xFinalPosition);
-            var y = Random.Range(yFinalPosition - _chunkSize, yFinalPosition);
+            var x = (int) Random.Range(xFinalPosition - _chunkSize, xFinalPosition);
+            var y = (int) Random.Range(yFinalPosition - _chunkSize, yFinalPosition);
             var tilePosition = new Vector3Int(x, y, 0);
             
             var planet = Instantiate(_planetPrefab, spaceTilemap.transform);
@@ -46,5 +39,6 @@ public class ChunkGenerator : MonoBehaviour
         }
         
         _chunkGenerated.Invoke(planets);
+        return spaceTilemap;
     }
 }
