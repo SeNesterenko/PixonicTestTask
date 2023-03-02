@@ -4,6 +4,7 @@ using Random = UnityEngine.Random;
 
 public class Planet : MonoBehaviour
 {
+    [SerializeField] private RectTransform _planetRectTransform;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private int _minRank;
     [SerializeField] private int _maxRank = 10000;
@@ -28,6 +29,11 @@ public class Planet : MonoBehaviour
             specialViewPlanet.gameObject.SetActive(false);
             _specialViewPlanet = specialViewPlanet;
         }
+    }
+
+    public void ResizePlanet(Vector3 newSize)
+    {
+        _planetRectTransform.localScale = newSize;
     }
 
     public Planet GetSpecialViewPlanet()

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Controllers
     {
         [SerializeField] private UnityEvent<List<Planet>> _viewChanged;
 
+        [SerializeField] private int _sizeRelativeCamera = 15;
         [SerializeField] private int _countNearestPlanets = 20;
         [SerializeField] private PlanetSorter _planetSorter;
 
@@ -47,6 +49,11 @@ namespace Controllers
                 if (_player.Transform.position != _previousPlayerPosition)
                 {
                     var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
+                    foreach (var specialViewPlanet in planets.Select(planet => planet.GetSpecialViewPlanet()))
+                    {
+                        specialViewPlanet.ResizePlanet(new Vector3((int) _playerCamera.m_Lens.OrthographicSize,
+                            (int) _playerCamera.m_Lens.OrthographicSize) / _sizeRelativeCamera);
+                    }
                     _viewChanged.Invoke(planets);
                     _previousPlayerPosition = _player.Transform.position;
                 }

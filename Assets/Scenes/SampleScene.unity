@@ -632,8 +632,8 @@ MonoBehaviour:
         m_CallState: 2
   _scrollSpeed: 20
   _playerCamera: {fileID: 557876668}
-  _minFieldView: 2.5
-  _maxFieldView: 500
+  _minFieldView: 5
+  _maxFieldView: 10000
   _specialViewModeDistance: 30
 --- !u!114 &1127894173
 MonoBehaviour:
@@ -864,6 +864,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _sizeRelativeCamera: 15
   _countNearestPlanets: 20
   _planetSorter: {fileID: 1599237405}
 --- !u!4 &1639927776
