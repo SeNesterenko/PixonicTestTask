@@ -37,8 +37,7 @@ namespace Controllers
         [UsedImplicitly]
         public void OnSpecialViewMode()
         {
-            var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
-            _viewChanged.Invoke(planets);
+            ProcessPlanets();
             _isSpecialViewMode = true;
         }
 
@@ -48,16 +47,21 @@ namespace Controllers
             {
                 if (_player.Transform.position != _previousPlayerPosition)
                 {
-                    var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
-                    foreach (var specialViewPlanet in planets.Select(planet => planet.GetSpecialViewPlanet()))
-                    {
-                        specialViewPlanet.ResizePlanet(new Vector3((int) _playerCamera.m_Lens.OrthographicSize,
-                            (int) _playerCamera.m_Lens.OrthographicSize) / _sizeRelativeCamera);
-                    }
-                    _viewChanged.Invoke(planets);
+                    ProcessPlanets();
                     _previousPlayerPosition = _player.Transform.position;
                 }
             }
+        }
+
+        private void ProcessPlanets()
+        {
+            var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
+            foreach (var specialViewPlanet in planets.Select(planet => planet.GetSpecialViewPlanet()))
+            {
+                specialViewPlanet.ResizePlanet(new Vector3((int) _playerCamera.m_Lens.OrthographicSize,
+                    (int) _playerCamera.m_Lens.OrthographicSize) / _sizeRelativeCamera);
+            }
+            _viewChanged.Invoke(planets);
         }
     }
 }
