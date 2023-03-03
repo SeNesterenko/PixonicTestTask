@@ -4,6 +4,9 @@ using Random = UnityEngine.Random;
 
 public class Planet : MonoBehaviour
 {
+    public int Rank { get; private set; }
+    public Vector2 Coordinates { get; private set; }
+    
     [SerializeField] private RectTransform _planetRectTransform;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private int _minRank;
@@ -11,8 +14,6 @@ public class Planet : MonoBehaviour
     [SerializeField] private Planet _specialViewPrefab;
 
     private Planet _specialViewPlanet;
-    public int Rank { get; private set; }
-    public Vector2 Coordinates { get; private set; }
 
     public void Initialize(Vector3 coordinates, bool isSpecialView, int rank = -1)
     {

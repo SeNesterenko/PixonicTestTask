@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class ChunkSpawner : MonoBehaviour
 {
+    public int ChunkSize => _chunkSize;
+    
     [SerializeField] private UnityEvent<List<Planet>> _chunkGenerated;
     
     [SerializeField] private Tilemap _spacePrefab;
@@ -14,7 +16,6 @@ public class ChunkSpawner : MonoBehaviour
 
     [SerializeField] private int _percentagePlanetsPerСhunk;
     [SerializeField] private int _chunkSize = 100;
-    public int ChunkSize => _chunkSize;
 
     public Tilemap SpawnChunk(Vector2 currentPosition)
     {
