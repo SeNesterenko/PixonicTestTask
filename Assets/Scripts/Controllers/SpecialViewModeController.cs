@@ -55,7 +55,7 @@ namespace Controllers
 
         private void ProcessPlanets()
         {
-            var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, 5674);
+            var planets = _planetSorter.GetNearestPlanets((int)_playerCamera.m_Lens.OrthographicSize, _player.Transform.position, _countNearestPlanets, _player.Rank);
             foreach (var specialViewPlanet in planets.Select(planet => planet.GetSpecialViewPlanet()))
             {
                 specialViewPlanet.ResizePlanet(new Vector3((int) _playerCamera.m_Lens.OrthographicSize,
