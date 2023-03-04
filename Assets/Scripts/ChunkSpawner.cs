@@ -1,46 +1,24 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Tilemaps;
 
 public class ChunkSpawner : MonoBehaviour
 {
-    public int ChunkSize => _chunkSize;
-    
-    [SerializeField] private UnityEvent<List<Planet>> _chunkGenerated;
-    
-    [SerializeField] private Tilemap _spacePrefab;
-    [SerializeField] private TileBase _tilePlanet;
+    [SerializeField] private UnityEvent<Chunk> _chunkGenerated;
     [SerializeField] private Grid _grid;
-    [SerializeField] private Planet _planetPrefab;
+    [SerializeField] private Chunk _chunkPrefab;
+    [SerializeField] private int _countPlantsPerChunk;
 
-    [SerializeField] private int _percentagePlanetsPerСhunk;
-    [SerializeField] private int _chunkSize = 100;
-
-    public Tilemap SpawnChunk(Vector2 currentPosition)
+    public Chunk SpawnChunk(Vector2 currentPosition)
     {
-        var spaceTilemap = Instantiate(_spacePrefab, _grid.transform);
+        var chunk = Instantiate(_chunkPrefab, _grid.transform);
         
-        var xFinalPosition = (currentPosition.x + 1) * _chunkSize;
-        var yFinalPosition = (currentPosition.y + 1) * _chunkSize;
-        var planets = new List<Planet>();
+        var xFinalPosition = (int)(currentPosition.x + 1) * chunk.ChunkSize;
+        var yFinalPosition = (int)(currentPosition.y + 1) * chunk.ChunkSize;
+        
+        chunk.GeneratePlanets(_countPlantsPerChunk, xFinalPosition, yFinalPosition);
 
-        for (var i = 0; i < _percentagePlanetsPerСhunk; i++)
-        {
-            var x = (int) Random.Range(xFinalPosition - _chunkSize, xFinalPosition);
-            var y = (int) Random.Range(yFinalPosition - _chunkSize, yFinalPosition);
-            var tilePosition = new Vector3Int(x, y, 0);
-            
-            var planet = Instantiate(_planetPrefab, spaceTilemap.transform);
-            planet.transform.position = tilePosition;
-            planet.Initialize(tilePosition, true);
-            planets.Add(planet);
-            
-            spaceTilemap.SetTile(tilePosition, _tilePlanet);
-        }
-        
-        _chunkGenerated.Invoke(planets);
-        spaceTilemap.gameObject.SetActive(false);
-        return spaceTilemap;
+        _chunkGenerated.Invoke(chunk);
+        chunk.gameObject.SetActive(false);
+        return chunk;
     }
 }

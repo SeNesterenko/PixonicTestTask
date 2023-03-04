@@ -16,14 +16,14 @@ namespace Controllers
         [SerializeField] private PlanetSorter _planetSorter;
         [SerializeField] private float _specialViewModeDistance = 30f;
         
-        private Player _player;
+        private Player.Player _player;
         private CinemachineVirtualCamera _playerCamera;
         private bool _isSpecialViewMode;
         
         private Vector3 _previousPlayerPosition;
         private float _previousCameraOrthographicSize;
 
-        public void Initialize(CinemachineVirtualCamera playerCamera, Player player)
+        public void Initialize(CinemachineVirtualCamera playerCamera, Player.Player player)
         {
             _playerCamera = playerCamera;
             _player = player;

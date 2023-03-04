@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace Controllers
+namespace Player
 {
     public class PlayerScrollController : MonoBehaviour
     {
@@ -10,8 +10,6 @@ namespace Controllers
         [SerializeField] private float _minFieldView = 5f;
         [SerializeField] private float _maxFieldView = 10000f;
 
-        private bool _isSpecialViewMode;
-        
         public void Scroll(float mouseScroll)
         {
             if (mouseScroll == 0

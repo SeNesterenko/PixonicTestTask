@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera _playerCamera;
-    [SerializeField] private Player _player;
+    [SerializeField] private Player.Player _player;
     
     [SerializeField] private SpecialViewModeController _specialViewModeController;
     [SerializeField] private ChunkController _chunkController;

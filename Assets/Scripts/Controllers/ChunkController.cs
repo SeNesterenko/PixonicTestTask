@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Controllers
 {
@@ -11,8 +10,9 @@ namespace Controllers
         [SerializeField] private ChunkSpawner _chunkSpawner;
 
         [SerializeField] private int _startQuantityChunks;
-    
-        private readonly Dictionary<Vector2, Tilemap> _chunks = new ();
+        [SerializeField] private int _chunkSize = 100;
+        
+        private readonly Dictionary<Vector2, Chunk> _chunks = new ();
         private Transform _player;
     
         private int _currentXIndex;
@@ -25,13 +25,13 @@ namespace Controllers
             _player = player;
         }
         
-        //Call it when ViewMode changed
+        //Call it when SpecialViewMode disabled from SpecialViewController
         [UsedImplicitly]
         public void InitializeSpawnChunks()
         {
             var currentPosition = SetCurrentPositionIndexes();
         
-            var activeChunks = new List<Tilemap>();
+            var activeChunks = new List<Chunk>();
             
             for (var x = -1; x <= 1; x++)
             {
@@ -57,8 +57,7 @@ namespace Controllers
 
         private void Start()
         {
-            SetCurrentPositionIndexes();
-            var currentPosition = new Vector2(_currentXIndex, _currentYIndex);
+            var currentPosition = SetCurrentPositionIndexes(); 
             var chunkStartIndex = Mathf.Sqrt(_startQuantityChunks) / 2;
 
             for (var x = -chunkStartIndex; x < chunkStartIndex; x++)
@@ -70,7 +69,7 @@ namespace Controllers
                 }
             }
         
-            var activeChunks = new List<Tilemap>();
+            var activeChunks = new List<Chunk>();
             for (var x = -1; x <= 1; x++)
             {
                 for (var y = -1; y <= 1; y++)
@@ -91,7 +90,7 @@ namespace Controllers
                 _chunks.ContainsKey(currentPosition) && _currentPosition != currentPosition)
             {
                 _chunkViewController.DisableChunks();
-                var activeChunks = new List<Tilemap>();
+                var activeChunks = new List<Chunk>();
             
                 for (var x = -1; x <= 1; x++)
                 {
@@ -120,8 +119,8 @@ namespace Controllers
         {
             if (_player != null)
             {
-                _currentXIndex = (int)_player.position.x / _chunkSpawner.ChunkSize;
-                _currentYIndex = (int)_player.position.y / _chunkSpawner.ChunkSize;
+                _currentXIndex = (int)_player.position.x / _chunkSize;
+                _currentYIndex = (int)_player.position.y / _chunkSize;
     
                 return new Vector2(_currentXIndex, _currentYIndex);
             }

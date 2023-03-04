@@ -13,8 +13,10 @@ public class PlanetSorter : MonoBehaviour
 
     //Call it when new chunk generated in ChunkSpawner
     [UsedImplicitly]
-    public void ResortPlanets(List<Planet> newPlanets)
+    public void ResortPlanets(Chunk chunk)
     {
+        var newPlanets = chunk.Planets;
+        
         foreach (var planet in newPlanets)
         {
             _sortedPlanetsByX.Add(planet);

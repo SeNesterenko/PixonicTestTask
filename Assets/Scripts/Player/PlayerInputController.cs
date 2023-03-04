@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Controllers
+namespace Player
 {
     [RequireComponent(typeof(PlayerMoveController))]
     [RequireComponent(typeof(PlayerScrollController))]
