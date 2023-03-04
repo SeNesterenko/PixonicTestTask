@@ -564,77 +564,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7ed39fd75146189dcf6120dff2f367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _specialViewModeOn:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2090840690}
-        m_TargetAssemblyTypeName: ChunkViewController, Assembly-CSharp
-        m_MethodName: DisablePlanets
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1639927775}
-        m_TargetAssemblyTypeName: SpecialViewModeController, Assembly-CSharp
-        m_MethodName: OnSpecialViewMode
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _specialViewModeOff:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1639927775}
-        m_TargetAssemblyTypeName: SpecialViewModeController, Assembly-CSharp
-        m_MethodName: OffSpecialViwMode
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1541542375}
-        m_TargetAssemblyTypeName: ChunkController, Assembly-CSharp
-        m_MethodName: InitializeSpawnChunks
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2090840690}
-        m_TargetAssemblyTypeName: Controllers.ChunkViewController, Assembly-CSharp
-        m_MethodName: DisablePlanets
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   _scrollSpeed: 20
   _playerCamera: {fileID: 557876668}
   _minFieldView: 5
   _maxFieldView: 10000
-  _specialViewModeDistance: 30
 --- !u!114 &1127894173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -849,13 +782,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dd06dd0b9c44ad924786b63292a0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _viewChanged:
+  _specialViewModeActivated:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2090840690}
-        m_TargetAssemblyTypeName: ChunkViewController, Assembly-CSharp
+        m_TargetAssemblyTypeName: Controllers.ChunkViewController, Assembly-CSharp
         m_MethodName: ShowPlanets
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _specialViewModeDisabled:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2090840690}
+        m_TargetAssemblyTypeName: Controllers.ChunkViewController, Assembly-CSharp
+        m_MethodName: DisablePlanets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1541542375}
+        m_TargetAssemblyTypeName: Controllers.ChunkController, Assembly-CSharp
+        m_MethodName: InitializeSpawnChunks
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -867,6 +827,7 @@ MonoBehaviour:
   _sizeRelativeCamera: 15
   _countNearestPlanets: 20
   _planetSorter: {fileID: 1599237405}
+  _specialViewModeDistance: 30
 --- !u!4 &1639927776
 Transform:
   m_ObjectHideFlags: 0
