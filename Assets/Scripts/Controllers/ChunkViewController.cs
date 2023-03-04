@@ -8,8 +8,8 @@ namespace Controllers
 {
     public class ChunkViewController : MonoBehaviour
     {
-        private List<Tilemap> _activeChunks = new ();
-        private List<Planet> _specialViewModePlanets = new();
+        private readonly List<Tilemap> _activeChunks = new ();
+        private readonly List<Planet> _specialViewModePlanets = new();
     
         public void DisableChunks()
         {
@@ -21,11 +21,12 @@ namespace Controllers
 
         public void ActivateChunks(List<Tilemap> activeChunks)
         {
-            _activeChunks = activeChunks;
+            _activeChunks.Clear();
 
-            foreach (var activeChunk in _activeChunks)
+            foreach (var chunk in activeChunks)
             {
-                activeChunk.gameObject.SetActive(true);
+                chunk.gameObject.SetActive(true);
+                _activeChunks.Add(chunk);
             }
         }
 

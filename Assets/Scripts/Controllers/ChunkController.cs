@@ -24,35 +24,7 @@ namespace Controllers
         {
             _player = player;
         }
-
-        private void Start()
-        {
-            SetCurrentPositionIndexes();
-            var currentPosition = new Vector2(_currentXIndex, _currentYIndex);
-            var chunkStartIndex = Mathf.Sqrt(_startQuantityChunks) / 2;
-
-            for (var x = -chunkStartIndex; x < chunkStartIndex; x++)
-            {
-                for (var y = -chunkStartIndex; y < chunkStartIndex; y++)
-                {
-                    var rangeOfCurrentPosition = new Vector2(currentPosition.x + x, currentPosition.y + y);
-                    _chunks.Add(rangeOfCurrentPosition, _chunkSpawner.SpawnChunk(rangeOfCurrentPosition));
-                }
-            }
         
-            var activeChunks = new List<Tilemap>();
-            for (var x = -1; x <= 1; x++)
-            {
-                for (var y = -1; y <= 1; y++)
-                {
-                    activeChunks.Add(_chunks[new Vector2(currentPosition.x + x, currentPosition.y + y)]);
-                }
-            }
-        
-            _chunkViewController.ActivateChunks(activeChunks);
-            _currentPosition = currentPosition;
-        }
-
         //Call it when ViewMode changed
         [UsedImplicitly]
         public void InitializeSpawnChunks()
@@ -79,6 +51,34 @@ namespace Controllers
                 }
             }
 
+            _chunkViewController.ActivateChunks(activeChunks);
+            _currentPosition = currentPosition;
+        }
+
+        private void Start()
+        {
+            SetCurrentPositionIndexes();
+            var currentPosition = new Vector2(_currentXIndex, _currentYIndex);
+            var chunkStartIndex = Mathf.Sqrt(_startQuantityChunks) / 2;
+
+            for (var x = -chunkStartIndex; x < chunkStartIndex; x++)
+            {
+                for (var y = -chunkStartIndex; y < chunkStartIndex; y++)
+                {
+                    var rangeOfCurrentPosition = new Vector2(currentPosition.x + x, currentPosition.y + y);
+                    _chunks.Add(rangeOfCurrentPosition, _chunkSpawner.SpawnChunk(rangeOfCurrentPosition));
+                }
+            }
+        
+            var activeChunks = new List<Tilemap>();
+            for (var x = -1; x <= 1; x++)
+            {
+                for (var y = -1; y <= 1; y++)
+                {
+                    activeChunks.Add(_chunks[new Vector2(currentPosition.x + x, currentPosition.y + y)]);
+                }
+            }
+        
             _chunkViewController.ActivateChunks(activeChunks);
             _currentPosition = currentPosition;
         }

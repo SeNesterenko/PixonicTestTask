@@ -11,7 +11,7 @@ public class PlanetSorter : MonoBehaviour
     private List<Planet> _sortedPlanetsByX = new ();
     private List<Planet> _sortedPlanetsByY = new ();
 
-    //Call it when new chunk generated
+    //Call it when new chunk generated in ChunkSpawner
     [UsedImplicitly]
     public void ResortPlanets(List<Planet> newPlanets)
     {
@@ -27,7 +27,7 @@ public class PlanetSorter : MonoBehaviour
 
     public List<Planet> GetNearestPlanets(int fieldView, Vector3 currentPlayerPosition, int countPlanets, int playerRank)
     {
-        var closestPlanets = SortPlanetsInFieldOfViewByPosition(fieldView, currentPlayerPosition, out var planetsInSight);
+        var closestPlanets = SortPlanetsInFieldOfViewByAscendingRank(fieldView, currentPlayerPosition, out var planetsInSight);
 
         var index = -1;
         
@@ -36,8 +36,7 @@ public class PlanetSorter : MonoBehaviour
             index = SearchNearestIndexByValue(playerRank, planetsInSight, index);
             GetNearestPlanetsByRank(countPlanets, playerRank, index, closestPlanets, planetsInSight);
         }
-        
-        
+
         return closestPlanets;
     }
 
@@ -64,15 +63,16 @@ public class PlanetSorter : MonoBehaviour
         }
     }
 
-    private List<Planet> SortPlanetsInFieldOfViewByPosition(int fieldView, Vector3 currentPlayerPosition, out List<Planet> planetsInSight)
+    private List<Planet> SortPlanetsInFieldOfViewByAscendingRank(int fieldView, Vector3 currentPlayerPosition, out List<Planet> planetsInSight)
     {
         var xPosition = (int) currentPlayerPosition.x;
         var yPosition = (int) currentPlayerPosition.y;
         var closestPlanets = new List<Planet>();
 
         planetsInSight = _sortedPlanetsByX
-            .Where(t => t.Coordinates.x >= xPosition - fieldView && t.Coordinates.x <= xPosition + fieldView).Where(t =>
-                t.Coordinates.y >= yPosition - fieldView && t.Coordinates.y <= yPosition + fieldView).ToList();
+            .Where(t => t.Coordinates.x >= xPosition - fieldView && t.Coordinates.x <= xPosition + fieldView)
+            .Where(t => t.Coordinates.y >= yPosition - fieldView && t.Coordinates.y <= yPosition + fieldView)
+            .ToList();
 
         planetsInSight = planetsInSight.OrderBy(planet => planet.Rank).ToList();
         return closestPlanets;
