@@ -6,20 +6,19 @@ namespace Controllers
 {
     public class ChunkController : MonoBehaviour
     {
-        [SerializeField] private ChunkViewController _chunkViewController;
+        [SerializeField] private ChunkViewer _chunkViewer;
         [SerializeField] private ChunkSpawner _chunkSpawner;
 
         [SerializeField] private int _startQuantityChunks;
         [SerializeField] private int _chunkSize = 100;
         
+        private Vector2 _currentPosition;
         private readonly Dictionary<Vector2, Chunk> _chunks = new ();
         private Transform _player;
     
         private int _currentXIndex;
         private int _currentYIndex;
-    
-        private Vector2 _currentPosition;
-    
+
         public void Initialize(Transform player)
         {
             _player = player;
@@ -57,7 +56,7 @@ namespace Controllers
                 }
             }
         
-            _chunkViewController.ActivateChunks(activeChunks);
+            _chunkViewer.ActivateChunks(activeChunks);
             _currentPosition = currentPosition;
         }
 
@@ -68,7 +67,7 @@ namespace Controllers
             if (!_chunks.ContainsKey(currentPosition) ||
                 _chunks.ContainsKey(currentPosition) && _currentPosition != currentPosition)
             {
-                _chunkViewController.DisableChunks();
+                _chunkViewer.DisableChunks();
                 SpawnChunksByPlayerPosition(currentPosition);
             }
         }
@@ -95,7 +94,7 @@ namespace Controllers
                 }
             }
 
-            _chunkViewController.ActivateChunks(activeChunks);
+            _chunkViewer.ActivateChunks(activeChunks);
             _currentPosition = currentPosition;
         }
         

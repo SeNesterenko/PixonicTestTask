@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fd11013b6a4b908bb5b86394a91432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chunkViewController: {fileID: 2090840690}
+  _chunkViewer: {fileID: 2090840690}
   _chunkSpawner: {fileID: 1527800156}
   _startQuantityChunks: 100
   _chunkSize: 100
@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 2090840689}
   - component: {fileID: 2090840690}
   m_Layer: 0
-  m_Name: ChunkViewController
+  m_Name: ChunkViewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
