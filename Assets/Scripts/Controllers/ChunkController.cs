@@ -30,29 +30,8 @@ namespace Controllers
         public void InitializeSpawnChunks()
         {
             var currentPosition = SetCurrentPositionIndexes();
-        
-            var activeChunks = new List<Chunk>();
-            
-            for (var x = -1; x <= 1; x++)
-            {
-                for (var y = -1; y <= 1; y++)
-                {
-                    var rangeOfCurrentPosition = new Vector2(currentPosition.x + x, currentPosition.y + y);
-                    
-                    if (!_chunks.ContainsKey(rangeOfCurrentPosition))
-                    {
-                        activeChunks.Add(_chunkSpawner.SpawnChunk(rangeOfCurrentPosition));
-                        _chunks.Add(rangeOfCurrentPosition, activeChunks[^1]);
-                    }
-                    else
-                    {
-                        activeChunks.Add(_chunks[rangeOfCurrentPosition]);
-                    }
-                }
-            }
 
-            _chunkViewController.ActivateChunks(activeChunks);
-            _currentPosition = currentPosition;
+            SpawnChunksByPlayerPosition(currentPosition);
         }
 
         private void Start()
@@ -90,31 +69,36 @@ namespace Controllers
                 _chunks.ContainsKey(currentPosition) && _currentPosition != currentPosition)
             {
                 _chunkViewController.DisableChunks();
-                var activeChunks = new List<Chunk>();
-            
-                for (var x = -1; x <= 1; x++)
-                {
-                    for (var y = -1; y <= 1; y++)
-                    {
-                        var rangeOfCurrentPosition = new Vector2(currentPosition.x + x, currentPosition.y + y);
-                    
-                        if (!_chunks.ContainsKey(rangeOfCurrentPosition))
-                        {
-                            activeChunks.Add(_chunkSpawner.SpawnChunk(rangeOfCurrentPosition));
-                            _chunks.Add(rangeOfCurrentPosition, activeChunks[^1]);
-                        }
-                        else
-                        {
-                            activeChunks.Add(_chunks[rangeOfCurrentPosition]);
-                        }
-                    }
-                }
-
-                _chunkViewController.ActivateChunks(activeChunks);
-                _currentPosition = currentPosition;
+                SpawnChunksByPlayerPosition(currentPosition);
             }
         }
 
+        private void SpawnChunksByPlayerPosition(Vector2 currentPosition)
+        {
+            var activeChunks = new List<Chunk>();
+
+            for (var x = -1; x <= 1; x++)
+            {
+                for (var y = -1; y <= 1; y++)
+                {
+                    var rangeOfCurrentPosition = new Vector2(currentPosition.x + x, currentPosition.y + y);
+
+                    if (!_chunks.ContainsKey(rangeOfCurrentPosition))
+                    {
+                        activeChunks.Add(_chunkSpawner.SpawnChunk(rangeOfCurrentPosition));
+                        _chunks.Add(rangeOfCurrentPosition, activeChunks[^1]);
+                    }
+                    else
+                    {
+                        activeChunks.Add(_chunks[rangeOfCurrentPosition]);
+                    }
+                }
+            }
+
+            _chunkViewController.ActivateChunks(activeChunks);
+            _currentPosition = currentPosition;
+        }
+        
         private Vector2 SetCurrentPositionIndexes()
         {
             if (_player != null)
