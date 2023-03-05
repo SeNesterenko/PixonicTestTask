@@ -54,7 +54,7 @@ namespace Controllers
             var distanceValue = (int) _playerCamera.m_Lens.OrthographicSize;
             var playerPosition = _player.Transform.position;
             var newPlanetSize = new Vector3(distanceValue, distanceValue) / _sizeRelativeCamera;
-            var planets = _planetSorter.GetNearestPlanets(distanceValue, playerPosition, _countNearestPlanets, 5000);
+            var planets = _planetSorter.GetNearestPlanets(distanceValue, playerPosition, _countNearestPlanets, _player.Rank);
             
             foreach (var specialViewPlanet in planets.Select(planet => planet.GetSpecialViewPlanet()))
             {

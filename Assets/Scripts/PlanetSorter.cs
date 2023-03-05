@@ -29,22 +29,24 @@ public class PlanetSorter : MonoBehaviour
 
     public List<Planet> GetNearestPlanets(int fieldView, Vector3 currentPlayerPosition, int countPlanets, int playerRank)
     {
-        var closestPlanets = SortPlanetsInFieldOfViewByAscendingRank(fieldView, currentPlayerPosition, out var planetsInSight);
+        var closestPlanets = new List<Planet>();
+        var planetsInSight = SortPlanetsInFieldOfViewByAscendingRank(fieldView, currentPlayerPosition);
 
         var index = -1;
         
         if (planetsInSight.Count != 0)
         {
             index = SearchNearestIndexByValue(playerRank, planetsInSight, index);
-            GetNearestPlanetsByRank(countPlanets, playerRank, index, closestPlanets, planetsInSight);
+            closestPlanets = GetNearestPlanetsByRank(countPlanets, playerRank, index, planetsInSight);
         }
 
         return closestPlanets;
     }
 
-    private static void GetNearestPlanetsByRank(int countPlanets, int playerRank, int index, List<Planet> closestPlanets,
-        List<Planet> planetsInSight)
+    private List<Planet> GetNearestPlanetsByRank(int countPlanets, int playerRank, int index, List<Planet> planetsInSight)
     {
+        var closestPlanets = new List<Planet>();
+        
         var leftBorder = index - 1;
         var rightBorder = index;
 
@@ -63,21 +65,23 @@ public class PlanetSorter : MonoBehaviour
                 rightBorder++;
             }
         }
+        
+        return closestPlanets;
     }
 
-    private List<Planet> SortPlanetsInFieldOfViewByAscendingRank(int fieldView, Vector3 currentPlayerPosition, out List<Planet> planetsInSight)
+    private List<Planet> SortPlanetsInFieldOfViewByAscendingRank(int fieldView, Vector3 currentPlayerPosition)
     {
         var xPosition = (int) currentPlayerPosition.x;
         var yPosition = (int) currentPlayerPosition.y;
-        var closestPlanets = new List<Planet>();
 
-        planetsInSight = _sortedPlanetsByX
+        var planetsInSight = _sortedPlanetsByX
             .Where(t => t.Coordinates.x >= xPosition - fieldView && t.Coordinates.x <= xPosition + fieldView)
             .Where(t => t.Coordinates.y >= yPosition - fieldView && t.Coordinates.y <= yPosition + fieldView)
             .ToList();
 
         planetsInSight = planetsInSight.OrderBy(planet => planet.Rank).ToList();
-        return closestPlanets;
+        
+        return planetsInSight;
     }
 
     private static int SearchNearestIndexByValue(int playerRank, List<Planet> planetsInSight, int index)
