@@ -9,7 +9,6 @@ public class PlanetSorter : MonoBehaviour
     private bool _isActive;
     
     private List<Planet> _sortedPlanetsByX = new ();
-    private List<Planet> _sortedPlanetsByY = new ();
 
     //Call it when new chunk generated in ChunkSpawner
     [UsedImplicitly]
@@ -20,11 +19,9 @@ public class PlanetSorter : MonoBehaviour
         foreach (var planet in newPlanets)
         {
             _sortedPlanetsByX.Add(planet);
-            _sortedPlanetsByY.Add(planet);
         }
 
         _sortedPlanetsByX = _sortedPlanetsByX.OrderBy(planet => (int) planet.Coordinates.x).ToList();
-        _sortedPlanetsByY = _sortedPlanetsByY.OrderBy(planet => (int) planet.Coordinates.y).ToList();
     }
 
     public List<Planet> GetNearestPlanets(int fieldView, Vector3 currentPlayerPosition, int countPlanets, int playerRank)
@@ -47,26 +44,35 @@ public class PlanetSorter : MonoBehaviour
     {
         var closestPlanets = new List<Planet>();
         
-        var leftBorder = index - 1;
-        var rightBorder = index;
+        var leftBorderIndex = index - 1;
+        var rightBorderIndex = index;
 
-        while (closestPlanets.Count < countPlanets && (leftBorder >= 0 || rightBorder < planetsInSight.Count))
+        while (closestPlanets.Count < countPlanets && CheckIndexNotOutOfRange(planetsInSight, leftBorderIndex, rightBorderIndex))
         {
-            if (leftBorder >= 0 && (rightBorder >= planetsInSight.Count ||
-                                    Math.Abs(playerRank - planetsInSight[leftBorder].Rank) <=
-                                    Math.Abs(planetsInSight[rightBorder].Rank - playerRank)))
+            if (leftBorderIndex >= 0 && (rightBorderIndex >= planetsInSight.Count || CheckLeftBorderRankLessThanRightBorderRank(playerRank, planetsInSight, leftBorderIndex, rightBorderIndex)))
             {
-                closestPlanets.Add(planetsInSight[leftBorder]);
-                leftBorder--;
+                closestPlanets.Add(planetsInSight[leftBorderIndex]);
+                leftBorderIndex--;
             }
             else
             {
-                closestPlanets.Add(planetsInSight[rightBorder]);
-                rightBorder++;
+                closestPlanets.Add(planetsInSight[rightBorderIndex]);
+                rightBorderIndex++;
             }
         }
         
         return closestPlanets;
+    }
+
+    private static bool CheckIndexNotOutOfRange(List<Planet> planetsInSight, int leftBorder, int rightBorder)
+    {
+        return leftBorder >= 0 || rightBorder < planetsInSight.Count;
+    }
+
+    private bool CheckLeftBorderRankLessThanRightBorderRank(int playerRank, List<Planet> planetsInSight, int leftBorder, int rightBorder)
+    {
+        return Math.Abs(playerRank - planetsInSight[leftBorder].Rank) <=
+               Math.Abs(planetsInSight[rightBorder].Rank - playerRank);
     }
 
     private List<Planet> SortPlanetsInFieldOfViewByAscendingRank(int fieldView, Vector3 currentPlayerPosition)
@@ -84,7 +90,7 @@ public class PlanetSorter : MonoBehaviour
         return planetsInSight;
     }
 
-    private static int SearchNearestIndexByValue(int playerRank, List<Planet> planetsInSight, int index)
+    private int SearchNearestIndexByValue(int playerRank, List<Planet> planetsInSight, int index)
     {
         if (playerRank <= planetsInSight[0].Rank)
         {
@@ -98,34 +104,9 @@ public class PlanetSorter : MonoBehaviour
 
         if (index == -1)
         {
-            var left = 0;
-            var right = planetsInSight.Count - 1;
-
-            while (left <= right)
-            {
-                var mid = left + (right - left) / 2;
-
-                if (planetsInSight[mid].Rank == playerRank)
-                {
-                    return mid;
-                }
-
-                if (index == -1 || Math.Abs(planetsInSight[mid].Rank - playerRank) < Math.Abs(planetsInSight[index].Rank - playerRank))
-                {
-                    index = mid;
-                }
-
-                if (planetsInSight[mid].Rank > playerRank)
-                {
-                    right = mid - 1;
-                }
-                else
-                {
-                    left = mid + 1;
-                }
-            }
+            index = Utils.BinarySearchByKey(planetsInSight, playerRank, i => planetsInSight[i].Rank);
         }
-
+        
         return index;
     }
 }
